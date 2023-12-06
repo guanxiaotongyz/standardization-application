@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import ScreenOne from './screens/ScreenOne';
 import ScreenTwo from './screens/ScreenTwo';
+import ScreenThree from './screens/ScreenThree';
 
 export default function App() {
 
@@ -13,9 +14,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="标准化软件" component={ScreenOne}  />
-        <Stack.Screen name="标准化软件2" component={ScreenTwo} />
-        <Stack.Screen name="标准化软件3" component={ScreenTwo} />
+        <Stack.Screen name="ScreenOne" component={ScreenOne}    />
+        <Stack.Screen name="ScreenTwo" component={ScreenTwo} options={{ headerBackTitle: 'Back' }} />
+        <Stack.Screen name="ScreenThree" component={ScreenThree} options={{ headerBackTitle: 'Back' }} />
 
       </Stack.Navigator>
     </NavigationContainer>
