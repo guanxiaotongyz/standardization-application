@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, Image } from "react-native";
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -13,6 +13,13 @@ const ScreenOne = ({ navigation }) => {
   const [textColor2, setTextColor2] = useState("black");
   const [textColor3, setTextColor3] = useState("black");
 
+  const [imageVisible, setImageVisible] = useState(true);
+  const [imageVisible2, setImageVisible2] = useState(false);
+  const [imageVisible3, setImageVisible3] = useState(false);
+
+  const [firstPressed, setFirstPressed] = useState(false);
+  const [secondPressed, setSecondPressed] = useState(false);
+  const [thirdPressed, setThirdPressed] = useState(false);
 
   return (
     <View>
@@ -24,12 +31,27 @@ const ScreenOne = ({ navigation }) => {
         <PressableButton
           style={Styles.button}
           pressHandler={() => {
-            setDisplayTextone("标准的实质是规矩、规则");
-            setTextColor("#5a80b8");
+            if (!firstPressed) {
+              setFirstPressed(true);
+              // Do first button actions...
+              setDisplayTextone("标准的实质是规矩、规则");
+              setTextColor("#5a80b8");
+              setImageVisible(false);
+              setImageVisible2(true);
+            }
+           
           }}
+          disabled={firstPressed}
         >
           <Text style={Styles.buttontext}>标准</Text>
         </PressableButton>
+        {/* /add Image/ */}
+        {imageVisible && ( // Render the image only if imageVisible is true
+          <Image
+            source={require("../assets/icon2.png")} // Replace with your image path
+            style={Styles.imageStyle} // Add a style for your image if necessary
+          />
+        )}
 
         <View style={Styles.comment}>
           <Text style={[Styles.commenttext, { color: textColor }]}>
@@ -42,12 +64,27 @@ const ScreenOne = ({ navigation }) => {
         <PressableButton
           style={Styles.button}
           pressHandler={() => {
-            setDisplayTexttwo("通俗地讲就是涉及标准的一系列活动");
-            setTextColor2("#5a80b8");
+            if (firstPressed && !secondPressed) {
+              setSecondPressed(true);
+              // Do second button actions...
+              setDisplayTexttwo("通俗地讲就是涉及标准的一系列活动");
+              setTextColor2("#5a80b8");
+              setImageVisible2(false);
+              setImageVisible3(true);
+            }
+           
           }}
+          disabled={!firstPressed || secondPressed}
+          
         >
           <Text style={Styles.buttontext}>标准化</Text>
         </PressableButton>
+        {imageVisible2 && ( // Render the image only if imageVisible is true
+          <Image
+            source={require("../assets/icon2.png")} // Replace with your image path
+            style={Styles.imageStyle} // Add a style for your image if necessary
+          />
+        )}
 
         <View style={Styles.comment}>
           <Text style={[Styles.commenttext, { color: textColor2 }]}>
@@ -60,12 +97,25 @@ const ScreenOne = ({ navigation }) => {
         <PressableButton
           style={Styles.button}
           pressHandler={() => {
-            setDisplayTextthree("理论上可看作一定范围内的标准的集合");
-            setTextColor3("#5a80b8");
+            if (!thirdPressed) {
+              setThirdPressed(true); // Set the third button as pressed
+              // Do third button actions...
+              setDisplayTextthree("理论上可看作一定范围内的标准的集合");
+              setTextColor3("#5a80b8");
+              setImageVisible3(false);
+            }
+           
           }}
+          disabled={thirdPressed}
         >
           <Text style={Styles.buttontext}>标准体系</Text>
         </PressableButton>
+        {imageVisible3 && ( // Render the image only if imageVisible is true
+          <Image
+            source={require("../assets/icon2.png")} // Replace with your image path
+            style={Styles.imageStyle} // Add a style for your image if necessary
+          />
+        )}
 
         <View style={Styles.comment}>
           <Text style={[Styles.commenttext, { color: textColor3 }]}>
@@ -74,14 +124,16 @@ const ScreenOne = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={Styles.buttonview}>
-        <PressableButton
-          style={Styles.buttontonextpage}
-          pressHandler={() => navigation.navigate("ScreenTwo")}
-        >
-          <Text style={Styles.buttonnexttext}>按一下更精彩</Text>
-        </PressableButton>
-      </View>
+      {thirdPressed && (
+        <View style={Styles.buttonview}>
+          <PressableButton
+            style={Styles.buttontonextpage}
+            pressHandler={() => navigation.navigate("ScreenTwo")}
+          >
+            <Text style={Styles.buttonnexttext}>按一下更精彩</Text>
+          </PressableButton>
+        </View>
+      )}
 
       <View style={Styles.buttomtextview}>
         <Text style={Styles.buttomtext}>探讨</Text>
@@ -130,6 +182,7 @@ const Styles = StyleSheet.create({
     marginTop: 19,
     marginBottom: 5,
     height: 60,
+    flexDirection: "row",
   },
   commenttext: {
     fontSize: 19,
@@ -148,8 +201,8 @@ const Styles = StyleSheet.create({
     color: "black",
   },
   buttontonextpage: {
-    height: 80, 
-    width: 140, 
+    height: 80,
+    width: 140,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FAD2D2", // The color from the image
@@ -157,9 +210,9 @@ const Styles = StyleSheet.create({
     shadowColor: "#000", // Shadow color
     shadowOffset: {
       width: 0,
-      height: 4, 
+      height: 4,
     },
-    shadowOpacity: 0.3, 
+    shadowOpacity: 0.3,
     shadowRadius: 5, // Adjust the shadow blur radius as needed
   },
   buttonnexttext: {
@@ -168,8 +221,11 @@ const Styles = StyleSheet.create({
     color: "#000", // Adjust the text color as needed to match the image
     textAlign: "center",
   },
-
-
+  imageStyle: {
+    width: 50, // Set the width of your image
+    height: 50, // Set the height of your image
+    resizeMode: "contain", // Keep the image aspect ratio
+  },
 });
 
 export default ScreenOne;
