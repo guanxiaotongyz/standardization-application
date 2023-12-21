@@ -1,15 +1,15 @@
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, Image } from "react-native";
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import PressableButton from "../components/PressableButton";
+// import {StandardType } from "../components/StandardType ";
 
 const ScreenTwo = ({ navigation }) => {
   const [displayTextone, setDisplayTextone] = useState();
-  const [displayTexttwo, setDisplayTexttwo] = useState();
+  const [imageVisible, setImageVisible] = useState(false);
 
   const [textColor, setTextColor] = useState("black");
-  const [textColor2, setTextColor2] = useState("black");
 
   return (
     <View>
@@ -24,7 +24,7 @@ const ScreenTwo = ({ navigation }) => {
             setDisplayTextone(
               "通过标准化活动，按照规定的程序经协商一致制定，为各种活动或其结果提供规则、指南或特性，供共同使用和重复使用的文件。"
             );
-            setTextColor("#5a80b8");
+            setTextColor("black");
           }}
         >
           <Text style={Styles.buttontext}>标准定义</Text>
@@ -46,8 +46,8 @@ const ScreenTwo = ({ navigation }) => {
         <PressableButton
           style={Styles.button}
           pressHandler={() => {
-            setDisplayTexttwo("通俗地讲就是涉及标准的一系列活动");
-            setTextColor2("#5a80b8");
+            // {<StandardType  />};
+            setImageVisible(true);
           }}
         >
           <Text style={Styles.buttontext}>标准化</Text>
@@ -58,9 +58,12 @@ const ScreenTwo = ({ navigation }) => {
         </View>
 
         <View style={Styles.commentkey2}>
-          <Text style={[Styles.commenttext, { color: textColor2 }]}>
-            {displayTexttwo}
-          </Text>
+          {imageVisible && ( // Render the image only if imageVisible is true
+            <Image
+              source={require("../assets/img2.png")} // Replace with your image path
+              style={Styles.imageStyle} // Add a style for your image if necessary
+            />
+          )}
         </View>
       </View>
       {/* ========= */}
@@ -127,18 +130,26 @@ const Styles = StyleSheet.create({
   commenttext: {
     fontSize: 19,
     fontWeight: "bold",
+    marginBottom: 0,
   },
   commentkey1: {
     marginTop: 10,
     marginLeft: 30,
-    height: 135,
-    width: 260,
+    marginBottom: 0,
+    height: 120,
+    width: 239,
   },
-
-
-
-
-
+  commentkey2: {
+    marginTop: 0,
+    marginBottom: 0,
+    width: 201,
+    height: 156,
+  },
+  imageStyle: {
+    width: 200, // Set the width of your image
+    height: 155, // Set the height of your image
+    resizeMode: "contain", // Keep the image aspect ratio
+  },
   buttomtextview: {
     flexDirection: "row",
     justifyContent: "space-around",
