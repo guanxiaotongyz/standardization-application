@@ -28,30 +28,31 @@ const ScreenOne = ({ navigation }) => {
       </View>
 
       <View style={Styles.buttonview}>
-        <PressableButton
-          style={Styles.button}
-          pressHandler={() => {
-            if (!firstPressed) {
-              setFirstPressed(true);
-              // Do first button actions...
-              setDisplayTextone("标准的实质是规矩、规则");
-              setTextColor("#5a80b8");
-              setImageVisible(false);
-              setImageVisible2(true);
-            }
-           
-          }}
-          disabled={firstPressed}
-        >
-          <Text style={Styles.buttontext}>标准</Text>
-        </PressableButton>
-        {/* /add Image/ */}
-        {imageVisible && ( // Render the image only if imageVisible is true
-          <Image
-            source={require("../assets/icon2.png")} // Replace with your image path
-            style={Styles.imageStyle} // Add a style for your image if necessary
-          />
-        )}
+        <View style={Styles.presscontainer}>
+          <PressableButton
+            style={Styles.button}
+            pressHandler={() => {
+              if (!firstPressed) {
+                setFirstPressed(true);
+                // Do first button actions...
+                setDisplayTextone("标准的实质是规矩、规则");
+                setTextColor("#5a80b8");
+                setImageVisible(false);
+                setImageVisible2(true);
+              }
+            }}
+            disabled={firstPressed}
+          >
+            <Text style={Styles.buttontext}>标准</Text>
+          </PressableButton>
+          {/* /add Image/ */}
+          {imageVisible ? ( // Render the image only if imageVisible is true
+            <Image
+              source={require("../assets/icon2.png")} // Replace with your image path
+              style={Styles.imageStyle} // Add a style for your image if necessary
+            />
+          ): (<View style={{height:50,width:50 }}></View>)}
+        </View>
 
         <View style={Styles.comment}>
           <Text style={[Styles.commenttext, { color: textColor }]}>
@@ -61,30 +62,30 @@ const ScreenOne = ({ navigation }) => {
       </View>
 
       <View style={Styles.buttonview}>
-        <PressableButton
-          style={Styles.button}
-          pressHandler={() => {
-            if (firstPressed && !secondPressed) {
-              setSecondPressed(true);
-              // Do second button actions...
-              setDisplayTexttwo("通俗地讲就是涉及标准的一系列活动");
-              setTextColor2("#5a80b8");
-              setImageVisible2(false);
-              setImageVisible3(true);
-            }
-           
-          }}
-          disabled={!firstPressed || secondPressed}
-          
-        >
-          <Text style={Styles.buttontext}>标准化</Text>
-        </PressableButton>
-        {imageVisible2 && ( // Render the image only if imageVisible is true
-          <Image
-            source={require("../assets/icon2.png")} // Replace with your image path
-            style={Styles.imageStyle} // Add a style for your image if necessary
-          />
-        )}
+        <View style={Styles.presscontainer}>
+          <PressableButton
+            style={Styles.button}
+            pressHandler={() => {
+              if (firstPressed && !secondPressed) {
+                setSecondPressed(true);
+                // Do second button actions...
+                setDisplayTexttwo("通俗地讲就是涉及标准的一系列活动");
+                setTextColor2("#5a80b8");
+                setImageVisible2(false);
+                setImageVisible3(true);
+              }
+            }}
+            disabled={!firstPressed || secondPressed}
+          >
+            <Text style={Styles.buttontext}>标准化</Text>
+          </PressableButton>
+          {imageVisible2 ? ( // Render the image only if imageVisible is true
+            <Image
+              source={require("../assets/icon2.png")} // Replace with your image path
+              style={Styles.imageStyle} // Add a style for your image if necessary
+            />
+          ):(<View style={{height:50,width:50 }}></View>)}
+        </View>
 
         <View style={Styles.comment}>
           <Text style={[Styles.commenttext, { color: textColor2 }]}>
@@ -94,28 +95,29 @@ const ScreenOne = ({ navigation }) => {
       </View>
 
       <View style={Styles.buttonview}>
-        <PressableButton
-          style={Styles.button}
-          pressHandler={() => {
-            if (!thirdPressed) {
-              setThirdPressed(true); // Set the third button as pressed
-              // Do third button actions...
-              setDisplayTextthree("理论上可看作一定范围内的标准的集合");
-              setTextColor3("#5a80b8");
-              setImageVisible3(false);
-            }
-           
-          }}
-          disabled={thirdPressed}
-        >
-          <Text style={Styles.buttontext}>标准体系</Text>
-        </PressableButton>
-        {imageVisible3 && ( // Render the image only if imageVisible is true
-          <Image
-            source={require("../assets/icon2.png")} // Replace with your image path
-            style={Styles.imageStyle} // Add a style for your image if necessary
-          />
-        )}
+        <View style={Styles.presscontainer}>
+          <PressableButton
+            style={Styles.button}
+            pressHandler={() => {
+              if (secondPressed && !thirdPressed) {
+                setThirdPressed(true); // Set the third button as pressed
+                // Do third button actions...
+                setDisplayTextthree("理论上可看作一定范围内的标准的集合");
+                setTextColor3("#5a80b8");
+                setImageVisible3(false);
+              }
+            }}
+            disabled={!secondPressed || thirdPressed}
+          >
+            <Text style={Styles.buttontext}>标准体系</Text>
+          </PressableButton>
+          {imageVisible3 ? ( // Render the image only if imageVisible is true
+            <Image
+              source={require("../assets/icon2.png")} // Replace with your image path
+              style={Styles.imageStyle} // Add a style for your image if necessary
+            />
+          ): (<View style={{height:50,width:50 }}></View>)}
+        </View>
 
         <View style={Styles.comment}>
           <Text style={[Styles.commenttext, { color: textColor3 }]}>
@@ -162,9 +164,13 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 5,
   },
+  presscontainer: {
+    flexDirection: "row",
+  },
   button: {
     height: 60,
     width: 120,
+    marginLeft: 23,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#5a80b8",
@@ -222,6 +228,8 @@ const Styles = StyleSheet.create({
     textAlign: "center",
   },
   imageStyle: {
+    marginTop: 10,
+    marginRight: 0,
     width: 50, // Set the width of your image
     height: 50, // Set the height of your image
     resizeMode: "contain", // Keep the image aspect ratio
